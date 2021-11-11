@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.ververica.cdc.connectors.postgres.table;
+package com.ververica.cdc.connectors.oracle.table;
 
 import org.apache.flink.table.api.DataTypes;
 import org.apache.flink.table.data.StringData;
@@ -29,8 +29,9 @@ import io.debezium.data.Envelope;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 
-/** Defines the supported metadata columns for {@link PostgreSQLTableSource}. */
-public enum PostgreSQLReadableMetadata {
+/** Defines the supported metadata columns for {@link OracleTableSource}. */
+public enum OracleReadableMetaData {
+
     /** Name of the table that contain the row. */
     TABLE_NAME(
             "table_name",
@@ -46,7 +47,6 @@ public enum PostgreSQLReadableMetadata {
                             sourceStruct.getString(AbstractSourceInfo.TABLE_NAME_KEY));
                 }
             }),
-
     /** Name of the schema that contain the row. */
     SCHEMA_NAME(
             "schema_name",
@@ -104,7 +104,7 @@ public enum PostgreSQLReadableMetadata {
 
     private final MetadataConverter converter;
 
-    PostgreSQLReadableMetadata(String key, DataType dataType, MetadataConverter converter) {
+    OracleReadableMetaData(String key, DataType dataType, MetadataConverter converter) {
         this.key = key;
         this.dataType = dataType;
         this.converter = converter;

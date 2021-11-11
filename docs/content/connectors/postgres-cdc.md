@@ -160,7 +160,6 @@ Available Metadata
 
 The following format metadata can be exposed as read-only (VIRTUAL) columns in a table definition.
 
-<div class="highlight">
 <table class="colwidths-auto docutils">
   <thead>
      <tr>
@@ -176,6 +175,11 @@ The following format metadata can be exposed as read-only (VIRTUAL) columns in a
       <td>Name of the table that contain the row.</td>
     </tr>
     <tr>
+      <td>schema_name</td>
+      <td>STRING NOT NULL</td>
+      <td>Name of the schema that contain the row.</td>
+    </tr>    
+    <tr>
       <td>database_name</td>
       <td>STRING NOT NULL</td>
       <td>Name of the database that contain the row.</td>
@@ -187,8 +191,42 @@ The following format metadata can be exposed as read-only (VIRTUAL) columns in a
     </tr>
   </tbody>
 </table>
-</div>
 
+Limitation
+--------
+
+### Can't perform checkpoint during scanning snapshot of tables
+During scanning snapshot of database tables, since there is no recoverable position, we can't perform checkpoints. In order to not perform checkpoints, Postgres CDC source will keep the checkpoint waiting to timeout. The timeout checkpoint will be recognized as failed checkpoint, by default, this will trigger a failover for the Flink job. So if the database table is large, it is recommended to add following Flink configurations to avoid failover because of the timeout checkpoints:
+
+```
+execution.checkpointing.interval: 10min
+execution.checkpointing.tolerable-failed-checkpoints: 100
+restart-strategy: fixed-delay
+restart-strategy.fixed-delay.attempts: 2147483647
+```
+
+The extended CREATE TABLE example demonstrates the syntax for exposing these metadata fields:
+```sql
+CREATE TABLE products (
+    db_name STRING METADATA FROM 'database_name' VIRTUAL,
+    table_name STRING METADATA  FROM 'table_name' VIRTUAL,
+    operation_ts TIMESTAMP_LTZ(3) METADATA FROM 'op_ts' VIRTUAL,
+    shipment_id INT,
+    order_id INT,
+    origin STRING,
+    destination STRING,
+    is_arrived BOOLEAN
+) WITH (
+  'connector' = 'postgres-cdc',
+  'hostname' = 'localhost',
+  'port' = '5432',
+  'username' = 'postgres',
+  'password' = 'postgres',
+  'database-name' = 'postgres',
+  'schema-name' = 'public',
+  'table-name' = 'shipments'
+);
+```
 
 Features
 --------
