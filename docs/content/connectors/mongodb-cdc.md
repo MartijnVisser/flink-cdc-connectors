@@ -14,7 +14,7 @@ In order to setup the MongoDB CDC connector, the following table provides depend
   <groupId>com.ververica</groupId>
   <artifactId>flink-connector-mongodb-cdc</artifactId>
   <!-- the dependency is available only for stable releases. -->
-  <version>2.1-SNAPSHOT</version>
+  <version>2.2-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -22,7 +22,7 @@ In order to setup the MongoDB CDC connector, the following table provides depend
 
 ```Download link is available only for stable releases.```
 
-Download [flink-sql-connector-mongodb-cdc-2.1-SNAPSHOT.jar](https://repo1.maven.org/maven2/com/ververica/flink-sql-connector-mongodb-cdc/2.1-SNAPSHOT/flink-sql-connector-mongodb-cdc-2.1-SNAPSHOT.jar) and put it under `<FLINK_HOME>/lib/`.
+Download [flink-sql-connector-mongodb-cdc-2.2-SNAPSHOT.jar](https://repo1.maven.org/maven2/com/ververica/flink-sql-connector-mongodb-cdc/2.2-SNAPSHOT/flink-sql-connector-mongodb-cdc-2.2-SNAPSHOT.jar) and put it under `<FLINK_HOME>/lib/`.
 
 Setup MongoDB
 ----------------
@@ -506,3 +506,8 @@ Reference
 - [Connection String Options](https://docs.mongodb.com/manual/reference/connection-string/#std-label-connections-connection-options)
 - [BSON Types](https://docs.mongodb.com/manual/reference/bson-types/)
 - [Flink DataTypes](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/dev/table/types/)
+
+FAQ
+--------
+* [FAQ(English)](https://github.com/ververica/flink-cdc-connectors/wiki/FAQ)
+* [FAQ(中文)](https://github.com/ververica/flink-cdc-connectors/wiki/FAQ(ZH))

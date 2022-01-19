@@ -3,6 +3,8 @@
 Flink CDC Connectors is a set of source connectors for <a href="https://flink.apache.org/">Apache Flink</a>, ingesting changes from different databases using change data capture (CDC).
 The Flink CDC Connectors integrates Debezium as the engine to capture data changes. So it can fully leverage the ability of Debezium. See more about what is [Debezium](https://github.com/debezium/debezium).
 
+![Flink_CDC](/_static/fig/flinkcdc.png "Flink CDC")
+
 ## Supported Connectors
 
 | Database | Version |
@@ -28,6 +30,7 @@ The version mapping between Flink CDC Connectors and Flink.
 |1.3.0 | 1.12.* |
 |1.4.0 | 1.13.* |
 |2.0.* | 1.13.* |
+|2.1.* | 1.13.* |
 
 ## Features
 
@@ -78,7 +81,7 @@ Include following Maven dependency (available through Maven Central):
   <!-- add the dependency matching your database -->
   <artifactId>flink-connector-mysql-cdc</artifactId>
   <!-- the dependency is available only for stable releases. -->
-  <version>2.1-SNAPSHOT</version>
+  <version>2.2-SNAPSHOT</version>
 </dependency>
 ```
 

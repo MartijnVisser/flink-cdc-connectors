@@ -14,7 +14,7 @@ In order to setup the Oracle CDC connector, the following table provides depende
   <groupId>com.ververica</groupId>
   <artifactId>flink-connector-oracle-cdc</artifactId>
   <!-- the dependency is available only for stable releases. -->
-  <version>2.1-SNAPSHOT</version>
+  <version>2.2-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -22,7 +22,7 @@ In order to setup the Oracle CDC connector, the following table provides depende
 
 **Download link is available only for stable releases.**
 
-Download [flink-sql-connector-oracle-cdc-2.1-SNAPSHOT.jar](https://repo1.maven.org/maven2/com/ververica/flink-sql-connector-oracle-cdc/2.1-SNAPSHOT/flink-sql-connector-oracle-cdc-2.1-SNAPSHOT.jar) and put it under `<FLINK_HOME>/lib/`.
+Download [flink-sql-connector-oracle-cdc-2.2-SNAPSHOT.jar](https://repo1.maven.org/maven2/com/ververica/flink-sql-connector-oracle-cdc/2.2-SNAPSHOT/flink-sql-connector-oracle-cdc-2.2-SNAPSHOT.jar) and put it under `<FLINK_HOME>/lib/`.
 
 Setup Oracle
 ----------------
@@ -120,10 +120,10 @@ The Oracle CDC table can be defined as following:
 ```sql 
 -- register an Oracle table 'products' in Flink SQL
 Flink SQL> CREATE TABLE products (
-     id INT NOT NULL,
-     name STRING,
-     description STRING,
-     weight DECIMAL(10, 3),
+     ID INT NOT NULL,
+     NAME STRING,
+     DESCRIPTION STRING,
+     WEIGHT DECIMAL(10, 3),
      PRIMARY KEY(id) NOT ENFORCED
      ) WITH (
      'connector' = 'oracle-cdc',
@@ -288,10 +288,10 @@ CREATE TABLE products (
     schema_name STRING METADATA FROM 'schema_name' VIRTUAL, 
     table_name STRING METADATA  FROM 'table_name' VIRTUAL,
     operation_ts TIMESTAMP_LTZ(3) METADATA FROM 'op_ts' VIRTUAL,
-    id INT NOT NULL,
-    name STRING,
-    description STRING,
-    weight DECIMAL(10, 3),
+    ID INT NOT NULL,
+    NAME STRING,
+    DESCRIPTION STRING,
+    WEIGHT DECIMAL(10, 3),
     PRIMARY KEY(id) NOT ENFORCED
 ) WITH (
     'connector' = 'oracle-cdc',
@@ -304,6 +304,8 @@ CREATE TABLE products (
     'table-name' = 'products'
 );
 ```
+
+** Note ** : The Oracle dialect is case-sensitive, it converts field name to uppercase if the field name is not quoted, Flink SQL doesn't convert the field name. Thus for physical columns from oracle database, we should use its converted field name in Oracle when define an `oracle-cdc` table in Flink SQL. 
 
 Features
 --------
@@ -342,7 +344,7 @@ public class OracleSourceExample {
              .hostname()
              .port(1521)
              .database("XE") // monitor XE database
-             .shemaList("inventory") // monitor inventory schema
+             .schemaList("inventory") // monitor inventory schema
              .tableList("inventory.products") // monitor products table
              .username("flinkuser")
              .password("flinkpw")
@@ -470,3 +472,8 @@ Data Type Mapping
     </tbody>
 </table>
 </div>
+
+FAQ
+--------
+* [FAQ(English)](https://github.com/ververica/flink-cdc-connectors/wiki/FAQ)
+* [FAQ(中文)](https://github.com/ververica/flink-cdc-connectors/wiki/FAQ(ZH))
